@@ -30,12 +30,20 @@ def print_board():
 
 
 def player_move(icon):
-    move = int(input("Type your move (1-9): ".strip()))
-    while move < 1 or move > 9:
-        print("The number should be between 1 and 9")
-        move = int(input("Type your move (1-9): ".strip()))
+    # Handle the user input
+    correct_input = False
+    while not correct_input:
+        try:
+            move = int(input("Type your move (1-9): ".strip()))
+            if move < 1 or move > 9:
+                print("The number should be between 1 and 9")
+                continue
+        except ValueError:
+            print("Please enter a number between 1-9")
+        else:
+            correct_input = True
 
-    # Handling if a space is already taken
+    # Check if a space is already taken
     if board[move - 1] == " ":
         board[move - 1] = icon
     else:
