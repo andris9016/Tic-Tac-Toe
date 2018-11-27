@@ -2,8 +2,6 @@ import os
 import time
 # import random
 
-board = [" " for i in range(9)]
-
 # Print the header
 
 
@@ -17,7 +15,7 @@ def print_header():
 # Print the board
 
 
-def print_board():
+def print_board(board):
     print("""
                       %s |  %s  | %s
                      -------------
@@ -29,7 +27,7 @@ def print_board():
 # Put the character, where the player want to
 
 
-def player_move(icon):
+def player_move(board, icon):
     # Handle the user input
     correct_input = False
     while not correct_input:
@@ -53,7 +51,7 @@ def player_move(icon):
 # Check if one of the player wins
 
 
-def is_winner(icon):
+def is_winner(board, icon):
     if(board[0] == icon and board[1] == icon and board[2] == icon) or \
       (board[3] == icon and board[4] == icon and board[5] == icon) or \
       (board[6] == icon and board[7] == icon and board[8] == icon) or \
@@ -69,40 +67,44 @@ def is_winner(icon):
 # Check for a tie
 
 
-def is_tie():
+def is_tie(board):
     if " " not in board:
         return True
     else:
         return False
 
 
-while True:
-    os.system("clear")
-    print_header()
-    print_board()
+def main():
+    board = [" " for i in range(9)]
+    while True:
+        os.system("clear")
+        print_header()
+        print_board(board)
 
-    print("X turns")
-    player_move("X")
-    os.system("clear")
-    print_header()
-    print_board()
+        print("X turns")
+        player_move(board, "X")
+        os.system("clear")
+        print_header()
+        print_board(board)
 
-    if is_winner("X"):
-        print("Congratulations! X wins!")
-        break
-    if is_tie():
-        print("It's a Tie!")
-        break
+        if is_winner(board, "X"):
+            print("Congratulations! X wins!")
+            break
+        if is_tie(board):
+            print("It's a Tie!")
+            break
 
-    print("O turns")
-    player_move("O")
-    os.system("clear")
-    print_header()
-    print_board()
+        print("O turns")
+        player_move(board, "O")
+        os.system("clear")
+        print_header()
+        print_board(board)
 
-    if is_winner("O"):
-        print("Congratulations! O wins!")
-        break
-    if is_tie():
-        print("It's a Tie!")
-        break
+        if is_winner(board, "O"):
+            print("Congratulations! O wins!")
+            break
+        if is_tie(board):
+            print("It's a Tie!")
+            break
+
+main()
