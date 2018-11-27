@@ -4,9 +4,8 @@ import time
 
 board = [" " for i in range(9)]
 
+
 # Print the header
-
-
 def print_header():
     print("""
              Welcome our first Tic-Tac-Toe Game           1 | 2 | 3
@@ -14,9 +13,8 @@ def print_header():
                                                           7 | 8 | 9
        """)
 
+
 # Print the board
-
-
 def print_board():
     print("""
                       %s |  %s  | %s
@@ -26,10 +24,9 @@ def print_board():
                       %s |  %s  | %s
         """ % (board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8]))
 
-# Put the character, where the player want to
 
-
-def player_move(icon):
+# Put the character, where the player want t
+def handle_input():
     # Handle the user input
     correct_input = False
     while not correct_input:
@@ -42,17 +39,20 @@ def player_move(icon):
             print("Please enter a number between 1-9")
         else:
             correct_input = True
+    return move
 
-    # Check if a space is already taken
+
+# Check if a space is already taken, put the icon in the table
+def player_move(icon):
+    move = handle_input()
     if board[move - 1] == " ":
         board[move - 1] = icon
     else:
         print("This space is not empty. Try it again!")
         time.sleep(1)
 
+
 # Check if one of the player wins
-
-
 def is_winner(icon):
     if(board[0] == icon and board[1] == icon and board[2] == icon) or \
       (board[3] == icon and board[4] == icon and board[5] == icon) or \
@@ -66,9 +66,8 @@ def is_winner(icon):
     else:
         return False
 
+
 # Check for a tie
-
-
 def is_tie():
     if " " not in board:
         return True
