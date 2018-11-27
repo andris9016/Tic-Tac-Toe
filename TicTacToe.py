@@ -1,6 +1,6 @@
 import os
 import time
-# import random
+import random
 
 
 # Print the header
@@ -40,7 +40,7 @@ def handle_input():
 
 
 # Check if a space is already taken, put the icon in the table
-def player_move(icon):
+def player_move(board, icon):
     move = handle_input()
     if board[move - 1] == " ":
         board[move - 1] = icon
@@ -62,6 +62,13 @@ def is_winner(board, icon):
         return True
     else:
         return False
+
+
+def computer_move(board, icon):
+    move = random.randint(1, 9)
+    while board[move - 1] != " ":
+        move = random.randint(1, 9)
+    board[move - 1] = icon
 
 
 # Check for a tie
@@ -93,7 +100,8 @@ def main():
             break
 
         print("O turns")
-        player_move(board, "O")
+        # player_move(board, "O")
+        computer_move(board, "O")
         os.system("clear")
         print_header()
         print_board(board)
@@ -104,5 +112,6 @@ def main():
         if is_tie(board):
             print("It's a Tie!")
             break
+
 
 main()
