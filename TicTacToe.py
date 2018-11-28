@@ -12,6 +12,30 @@ def print_header():
        """)
 
 
+def menu():
+    print("""
+            Menu
+            ---------------------------
+            1. Single player
+            2. Multiplayer
+            3. Exit """)
+
+    # Handle the user input
+    correct_input = False
+    while not correct_input:
+        try:
+            selection = int(input("Enter your option (1-3): ".strip()))
+            if selection < 1 or selection > 3:
+                print("The number should be between 1 and 9")
+                continue
+        except ValueError:
+            print("Please enter a number between 1-9")
+        else:
+            correct_input = True
+
+    return selection
+
+
 def print_board(board):
     print("""
                       %s |  %s  | %s
@@ -22,7 +46,7 @@ def print_board(board):
         """ % (board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8]))
 
 
-# Put the character, where the player want t
+# Put the character, where the player want
 def handle_input():
     # Handle the user input
     correct_input = False
@@ -65,6 +89,10 @@ def is_winner(board, icon):
 
 
 def computer_move(board, icon):
+    if board[4] == " ":
+        board[4] = icon
+        return None
+
     move = random.randint(1, 9)
     while board[move - 1] != " ":
         move = random.randint(1, 9)
@@ -84,7 +112,8 @@ def main():
     while True:
         os.system("clear")
         print_header()
-        print_board(board)
+        # print_board(board)
+        menu()
 
         print("X turns")
         player_move(board, "X")
