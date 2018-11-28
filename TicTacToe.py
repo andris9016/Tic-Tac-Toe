@@ -11,6 +11,24 @@ def print_header():
                                                           7 | 8 | 9
        """)
 
+def print_thanks():
+   print("""
+            ░░░░░░░░░░░░░░░░░░░░░░█████████
+            ░░███████░░░░░░░░░░███▒▒▒▒▒▒▒▒███
+            ░░█▒▒▒▒▒▒█░░░░░░░███▒▒▒▒▒▒▒▒▒▒▒▒▒███
+            ░░░█▒▒▒▒▒▒█░░░░██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██
+            ░░░░█▒▒▒▒▒█░░░██▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒███
+            ░░░░░█▒▒▒█░░░█▒▒▒▒▒▒████▒▒▒▒████▒▒▒▒▒▒██
+            ░░░█████████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██
+            ░░░█▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒██
+            ░██▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒██▒▒▒▒▒▒▒▒▒▒██▒▒▒▒██
+            ██▒▒▒███████████▒▒▒▒▒██▒▒▒▒▒▒▒▒██▒▒▒▒▒██
+            █▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒████████▒▒▒▒▒▒▒██
+            ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██
+            ░█▒▒▒███████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██
+            ░██▒▒▒▒▒▒▒▒▒▒████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█
+            ░░████████████░░░█████████████████""")
+
 
 def menu():
     print("""
@@ -108,6 +126,7 @@ def is_tie(board):
     else:
         return False
 
+
 def update_table(board):
     os.system("clear")
     print_header()
@@ -116,22 +135,45 @@ def update_table(board):
 
 def main():
     board = [" " for i in range(9)]
-    while True:
-        update_table(board)
-        print("X turns")
-        player_move(board, "X")
-        update_table(board)
-        if is_winner(board, "X"):         
-            break
-        if is_tie(board):           
-            break
-        print("O turns")
-        player_move(board, "O")
-        update_table(board)
-        if is_winner(board, "O"):         
-            break
-        if is_tie(board):         
-            break
+    print_header()
+    option = menu()
+    if option == 1:
+        while True:
+            update_table(board)
+            print("X turns")
+            player_move(board, "X")
+            update_table(board)
+            if is_winner(board, "X"):         
+                break
+            if is_tie(board):      
+                break
+            print("Computer turns")
+            computer_move(board, "O")
+            update_table(board)
+            if is_winner(board, "O"):       
+                break
+            if is_tie(board):  
+                break
 
+    elif option == 2:
+        while True:
+            update_table(board)
+            print("X turns")
+            player_move(board, "X")
+            update_table(board)
+            if is_winner(board, "X"):         
+                break
+            if is_tie(board):      
+                break
+            print("O turns")
+            player_move(board, "O")
+            update_table(board)
+            if is_winner(board, "O"):       
+                break
+            if is_tie(board):  
+                break
+    elif option == 3:
+        os.system("clear")
+        print_thanks()
 
 main()
