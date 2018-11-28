@@ -22,7 +22,7 @@ def print_board(board):
         """ % (board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8]))
 
 
-# Put the character, where the player want t
+# Put the character, where the player want to
 def handle_input():
     # Handle the user input
     correct_input = False
@@ -40,7 +40,7 @@ def handle_input():
 
 
 # Check if a space is already taken, put the icon in the table
-def player_move(icon):
+def player_move(board, icon):
     move = handle_input()
     if board[move - 1] == " ":
         board[move - 1] = icon
@@ -59,6 +59,7 @@ def is_winner(board, icon):
       (board[2] == icon and board[5] == icon and board[8] == icon) or \
       (board[0] == icon and board[4] == icon and board[8] == icon) or \
       (board[2] == icon and board[4] == icon and board[6] == icon):
+        print("Congratulations!", icon, "wins!")
         return True
     else:
         return False
@@ -67,42 +68,34 @@ def is_winner(board, icon):
 # Check for a tie
 def is_tie(board):
     if " " not in board:
+        print("It's a tie")
         return True
     else:
         return False
+
+def update_table(board):
+    os.system("clear")
+    print_header()
+    print_board(board)
 
 
 def main():
     board = [" " for i in range(9)]
     while True:
-        os.system("clear")
-        print_header()
-        print_board(board)
-
+        update_table(board)
         print("X turns")
         player_move(board, "X")
-        os.system("clear")
-        print_header()
-        print_board(board)
-
-        if is_winner(board, "X"):
-            print("Congratulations! X wins!")
+        update_table(board)
+        if is_winner(board, "X"):         
             break
-        if is_tie(board):
-            print("It's a Tie!")
+        if is_tie(board):           
             break
-
         print("O turns")
         player_move(board, "O")
-        os.system("clear")
-        print_header()
-        print_board(board)
-
-        if is_winner(board, "O"):
-            print("Congratulations! O wins!")
+        update_table(board)
+        if is_winner(board, "O"):         
             break
-        if is_tie(board):
-            print("It's a Tie!")
+        if is_tie(board):         
             break
 
 main()
