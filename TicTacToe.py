@@ -1,6 +1,6 @@
 import os
 import time
-# import random
+import random
 
 
 # Print the header
@@ -10,6 +10,30 @@ def print_header():
         The palces where you should put your character:   4 | 5 | 6
                                                           7 | 8 | 9
        """)
+
+
+def menu():
+    print("""
+            Menu
+            ---------------------------
+            1. Single player
+            2. Multiplayer
+            3. Exit """)
+
+    # Handle the user input
+    correct_input = False
+    while not correct_input:
+        try:
+            selection = int(input("Enter your option (1-3): ".strip()))
+            if selection < 1 or selection > 3:
+                print("The number should be between 1 and 9")
+                continue
+        except ValueError:
+            print("Please enter a number between 1-9")
+        else:
+            correct_input = True
+
+    return selection
 
 
 def print_board(board):
@@ -65,6 +89,17 @@ def is_winner(board, icon):
         return False
 
 
+def computer_move(board, icon):
+    if board[4] == " ":
+        board[4] = icon
+        return None
+
+    move = random.randint(1, 9)
+    while board[move - 1] != " ":
+        move = random.randint(1, 9)
+    board[move - 1] = icon
+
+
 # Check for a tie
 def is_tie(board):
     if " " not in board:
@@ -97,5 +132,6 @@ def main():
             break
         if is_tie(board):         
             break
+
 
 main()
