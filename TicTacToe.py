@@ -11,8 +11,9 @@ def print_header():
                                                           7 | 8 | 9
        """)
 
+
 def print_thanks():
-   print("""
+    print("""
             ░░░░░░░░░░░░░░░░░░░░░░█████████
             ░░███████░░░░░░░░░░███▒▒▒▒▒▒▒▒███
             ░░█▒▒▒▒▒▒█░░░░░░░███▒▒▒▒▒▒▒▒▒▒▒▒▒███
@@ -56,11 +57,13 @@ def menu():
 
 def print_board(board):
     print("""
-                      %s |  %s  | %s
-                     -------------
-                      %s |  %s  | %s
-                     -------------
-                      %s |  %s  | %s
+                    ╔═══╦═══╦═══╗
+                    ║ %s ║ %s ║ %s ║
+                    ╠═══╬═══╬═══╣
+                    ║ %s ║ %s ║ %s ║
+                    ╠═══╬═══╬═══╣
+                    ║ %s ║ %s ║ %s ║
+                    ╚═══╩═══╩═══╝
         """ % (board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8]))
 
 
@@ -143,16 +146,16 @@ def main():
             print("X turns")
             player_move(board, "X")
             update_table(board)
-            if is_winner(board, "X"):         
+            if is_winner(board, "X"):
                 break
-            if is_tie(board):      
+            if is_tie(board):
                 break
             print("Computer turns")
             computer_move(board, "O")
             update_table(board)
-            if is_winner(board, "O"):       
+            if is_winner(board, "O"):
                 break
-            if is_tie(board):  
+            if is_tie(board):
                 break
 
     elif option == 2:
@@ -161,19 +164,20 @@ def main():
             print("X turns")
             player_move(board, "X")
             update_table(board)
-            if is_winner(board, "X"):         
+            if is_winner(board, "X"):
                 break
-            if is_tie(board):      
+            if is_tie(board):
                 break
             print("O turns")
             player_move(board, "O")
             update_table(board)
-            if is_winner(board, "O"):       
+            if is_winner(board, "O"):
                 break
-            if is_tie(board):  
+            if is_tie(board):
                 break
     elif option == 3:
         os.system("clear")
         print_thanks()
+
 
 main()
