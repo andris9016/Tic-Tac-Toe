@@ -12,23 +12,10 @@ def print_header():
        """)
 
 
-def print_thanks():
-    print("""
-            ░░░░░░░░░░░░░░░░░░░░░░█████████
-            ░░███████░░░░░░░░░░███▒▒▒▒▒▒▒▒███
-            ░░█▒▒▒▒▒▒█░░░░░░░███▒▒▒▒▒▒▒▒▒▒▒▒▒███
-            ░░░█▒▒▒▒▒▒█░░░░██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██
-            ░░░░█▒▒▒▒▒█░░░██▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒███
-            ░░░░░█▒▒▒█░░░█▒▒▒▒▒▒████▒▒▒▒████▒▒▒▒▒▒██
-            ░░░█████████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██
-            ░░░█▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒██
-            ░██▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒██▒▒▒▒▒▒▒▒▒▒██▒▒▒▒██
-            ██▒▒▒███████████▒▒▒▒▒██▒▒▒▒▒▒▒▒██▒▒▒▒▒██
-            █▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒████████▒▒▒▒▒▒▒██
-            ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██
-            ░█▒▒▒███████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██
-            ░██▒▒▒▒▒▒▒▒▒▒████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█
-            ░░████████████░░░█████████████████""")
+def print_symbol():
+    read_file = open("symbol.txt", "r")
+    content = read_file.read()
+    print(content)
 
 
 def menu():
@@ -37,13 +24,15 @@ def menu():
             ---------------------------
             1. Single player
             2. Multiplayer
-            3. Exit """)
+            3. Exit
+            ---------------------------
+            """)
 
     # Handle the user input
     correct_input = False
     while not correct_input:
         try:
-            selection = int(input("Enter your option (1-3): ".strip()))
+            selection = int(input(" "*12 + "Enter your option (1-3): ".strip()))
             if selection < 1 or selection > 3:
                 print("The number should be between 1 and 9")
                 continue
@@ -95,7 +84,7 @@ def player_move(board, icon):
 
 
 # Check if one of the player wins
-def is_winner(board, icon):
+def is_winner(board, icon, name):
     if(board[0] == icon and board[1] == icon and board[2] == icon) or \
       (board[3] == icon and board[4] == icon and board[5] == icon) or \
       (board[6] == icon and board[7] == icon and board[8] == icon) or \
@@ -104,7 +93,7 @@ def is_winner(board, icon):
       (board[2] == icon and board[5] == icon and board[8] == icon) or \
       (board[0] == icon and board[4] == icon and board[8] == icon) or \
       (board[2] == icon and board[4] == icon and board[6] == icon):
-        print("Congratulations!", icon, "wins!")
+        print("Congratulations!", name, "won the game!")
         return True
     else:
         return False
@@ -141,45 +130,45 @@ def main():
     print_header()
     option = menu()
     if option == 1:
-        player1_name = input("Enter your name: ")
+        player1_name = input(" "*12 + "Enter your name: ")
         while True:
             update_table(board)
             print(player1_name, "turns")
             player_move(board, "X")
             update_table(board)
-            if is_winner(board, "X"):
+            if is_winner(board, "X", player1_name):
                 break
             if is_tie(board):
                 break
             computer_move(board, "O")
             update_table(board)
-            if is_winner(board, "O"):
+            if is_winner(board, "O", "The computer"):
                 break
             if is_tie(board):
                 break
 
     elif option == 2:
-        player1_name = input("Enter your name: ")
-        player2_name = input("Enter your name: ")
+        player1_name = input(" "*12 + "First player's name: ")
+        player2_name = input(" "*12 + "Second player's name: ")
         while True:
             update_table(board)
             print(player1_name, "turns")
             player_move(board, "X")
             update_table(board)
-            if is_winner(board, "X"):
+            if is_winner(board, "X", player1_name):
                 break
             if is_tie(board):
                 break
             print(player2_name, "turns")
             player_move(board, "O")
             update_table(board)
-            if is_winner(board, "O"):
+            if is_winner(board, "O", player2_name):
                 break
             if is_tie(board):
                 break
     elif option == 3:
         os.system("clear")
-        print_thanks()
+        print_symbol()
 
 
 main()
