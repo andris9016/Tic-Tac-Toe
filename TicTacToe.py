@@ -141,16 +141,16 @@ def main():
     print_header()
     option = menu()
     if option == 1:
+        player1_name = input("Enter your name: ")
         while True:
             update_table(board)
-            print("X turns")
+            print(player1_name, "turns")
             player_move(board, "X")
             update_table(board)
             if is_winner(board, "X"):
                 break
             if is_tie(board):
                 break
-            print("Computer turns")
             computer_move(board, "O")
             update_table(board)
             if is_winner(board, "O"):
@@ -159,16 +159,18 @@ def main():
                 break
 
     elif option == 2:
+        player1_name = input("Enter your name: ")
+        player2_name = input("Enter your name: ")
         while True:
             update_table(board)
-            print("X turns")
+            print(player1_name, "turns")
             player_move(board, "X")
             update_table(board)
             if is_winner(board, "X"):
                 break
             if is_tie(board):
                 break
-            print("O turns")
+            print(player2_name, "turns")
             player_move(board, "O")
             update_table(board)
             if is_winner(board, "O"):
