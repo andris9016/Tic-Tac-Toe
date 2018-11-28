@@ -116,7 +116,10 @@ def update_table(board):
 
 def main():
     board = [" " for i in range(9)]
-    while True:
+    print_header
+    menu()
+    
+    if menu() == 2:
         update_table(board)
         print("X turns")
         player_move(board, "X")
@@ -132,6 +135,7 @@ def main():
             break
         if is_tie(board):         
             break
+    #elif menu() == 2:
 
 
 main()
