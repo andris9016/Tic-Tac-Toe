@@ -3,7 +3,6 @@ import time
 import random
 
 
-# Print the header
 def print_header():
     print("""
                Welcome to our Tic-Tac-Toe Game            1 | 2 | 3  
@@ -11,7 +10,7 @@ def print_header():
                                                           7 | 8 | 9
        """)
 
-
+# Prints the picture when the user exits the menu
 def print_symbol():
     read_file = open("symbol.txt", "r")
     content = read_file.read()
@@ -37,7 +36,7 @@ def menu():
                 print("The number should be between 1 and 9")
                 continue
         except ValueError:
-            print("Please enter a number between 1-9")
+            print("Please enter a number between 1 and 9")
         else:
             correct_input = True
 
@@ -56,24 +55,24 @@ def print_board(board):
         """ % (board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8]))
 
 
-# Put the character, where the player want to
+
+# Handles the user input
 def handle_input():
-    # Handle the user input
     correct_input = False
     while not correct_input:
         try:
-            move = int(input("Type your move (1-9): ".strip()))
+            move = int(input("Enter your move (1-9): ".strip()))
             if move < 1 or move > 9:
                 print("The number should be between 1 and 9")
                 continue
         except ValueError:
-            print("Please enter a number between 1-9")
+            print("Please enter a number between 1 and 9")
         else:
             correct_input = True
     return move
 
 
-# Check if a space is already taken, put the icon in the table
+# Checks if a space is already taken, puts the icon on the table
 def player_move(board, icon):
     move = handle_input()
     if board[move - 1] == " ":
@@ -83,7 +82,19 @@ def player_move(board, icon):
         time.sleep(1)
 
 
-# Check if one of the player wins
+# The AI checks if a space is already taken, puts the icon on the table
+def computer_move(board, icon):
+    if board[4] == " ":
+        board[4] = icon
+        return None
+
+    move = random.randint(1, 9)
+    while board[move - 1] != " ":
+        move = random.randint(1, 9)
+    board[move - 1] = icon
+
+
+# Checks if one of the player won the game
 def is_winner(board, icon, name):
     if(board[0] == icon and board[1] == icon and board[2] == icon) or \
       (board[3] == icon and board[4] == icon and board[5] == icon) or \
@@ -99,18 +110,7 @@ def is_winner(board, icon, name):
         return False
 
 
-def computer_move(board, icon):
-    if board[4] == " ":
-        board[4] = icon
-        return None
-
-    move = random.randint(1, 9)
-    while board[move - 1] != " ":
-        move = random.randint(1, 9)
-    board[move - 1] = icon
-
-
-# Check for a tie
+# Checks if it's a tie
 def is_tie(board):
     if " " not in board:
         print("It's a tie")
@@ -131,6 +131,7 @@ def main():
     board = [" " for i in range(9)]
     print_header()
     option = menu()
+    # Single player option
     if option == 1:
         player1_name = input(" "*12 + "Enter your name: ")
         while True:
@@ -148,7 +149,7 @@ def main():
                 break
             if is_tie(board):
                 break
-
+    # Multiplayer option
     elif option == 2:
         player1_name = input(" "*12 + "First player's name: ")
         player2_name = input(" "*12 + "Second player's name: ")
@@ -168,6 +169,7 @@ def main():
                 break
             if is_tie(board):
                 break
+    # Exit option
     elif option == 3:
         os.system("clear")
         print_symbol()
