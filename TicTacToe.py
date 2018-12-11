@@ -33,10 +33,10 @@ def menu():
         try:
             selection = int(input(" "*12 + "Enter your option (1-3): ".strip()))
             if selection < 1 or selection > 3:
-                print("The number should be between 1 and 9")
+                print("The number should be between 1 and 3")
                 continue
         except ValueError:
-            print("Please enter a number between 1 and 9")
+            print("Please enter a number between 1 and 3")
         else:
             correct_input = True
 
@@ -56,30 +56,23 @@ def print_board(board):
 
 
 
-# Handles the user input
-def handle_input():
-    correct_input = False
-    while not correct_input:
+# Places the move, if it's correct
+def player_move(board, icon):    
+    empty = False
+    while not empty:
         try:
             move = int(input("Enter your move (1-9): ".strip()))
             if move < 1 or move > 9:
                 print("The number should be between 1 and 9")
-                continue
+            elif board[move - 1] != " ":
+                print("This space is not empty. Try it again!")
+                time.sleep(2)
+                update_table(board)
+            else:
+                board[move - 1] = icon
+                empty = True
         except ValueError:
             print("Please enter a number between 1 and 9")
-        else:
-            correct_input = True
-    return move
-
-
-# Checks if a space is already taken, puts the icon on the table
-def player_move(board, icon):
-    move = handle_input()
-    if board[move - 1] == " ":
-        board[move - 1] = icon
-    else:
-        print("This space is not empty. Try it again!")
-        time.sleep(1)
 
 
 # The AI checks if a space is already taken, puts the icon on the table
@@ -110,10 +103,10 @@ def is_winner(board, icon, name):
         return False
 
 
-# Checks if it's a tie
-def is_tie(board):
+# Checks if there's place left to mark
+def is_board_full(board):
     if " " not in board:
-        print("It's a tie")
+        print("Game is over")
         return True
     else:
         return False
@@ -125,7 +118,52 @@ def update_table(board):
     print_board(board)
 
 
+def single_player(board, option):
+    player1_name = input(" "*12 + "Enter your name: ")
+    while option == 1:
+        update_table(board)
+        print(player1_name, "\'s turn")
+        player_move(board, "X")
+        update_table(board)
+        if check_win_tie(board, "X", player1_name):
+            break
+        computer_move(board, "O")
+        update_table(board)
+        if check_win_tie(board, "O", "The computer"):
+            break
 
+def multiplayer(board, option):
+    player1_name = input(" "*12 + "First player's name: ")
+    player2_name = input(" "*12 + "Second player's name: ")
+    while option == 2:
+        update_table(board)
+        print(player1_name + "\'s turn")
+        player_move(board, "X")
+        update_table(board)
+        if check_win_tie(board, "X", player1_name):
+            play_again(board, option)
+        print(player2_name + "\'s turn")
+        player_move(board, "O")
+        update_table(board)
+        if check_win_tie(board, "O", player2_name):
+            play_again(board, option)
+
+def play_again(board, option):
+    choice = input("Do you want to play again?")
+    if choice == "Y" or "y":
+        board = [" " for i in range(9)]
+        update_table(board)        
+        version = input("Single or Multi?")
+        if version == "Single":
+            option = 1
+            return option, board
+
+
+# Checks if the game is over
+def check_win_tie(board, icon, player):
+    return is_winner(board, icon, player)
+    return is_board_full(board)
+        
 
 def main():
     board = [" " for i in range(9)]
@@ -133,42 +171,10 @@ def main():
     option = menu()
     # Single player option
     if option == 1:
-        player1_name = input(" "*12 + "Enter your name: ")
-        while True:
-            update_table(board)
-            print(player1_name, "\'s turn")
-            player_move(board, "X")
-            update_table(board)
-            if is_winner(board, "X", player1_name):
-                break
-            if is_tie(board):
-                break
-            computer_move(board, "O")
-            update_table(board)
-            if is_winner(board, "O", "The computer"):
-                break
-            if is_tie(board):
-                break
+        single_player(board, option)
     # Multiplayer option
     elif option == 2:
-        player1_name = input(" "*12 + "First player's name: ")
-        player2_name = input(" "*12 + "Second player's name: ")
-        while True:
-            update_table(board)
-            print(player1_name + "\'s turn")
-            player_move(board, "X")
-            update_table(board)
-            if is_winner(board, "X", player1_name):
-                break
-            if is_tie(board):
-                break
-            print(player2_name + "\'s turn")
-            player_move(board, "O")
-            update_table(board)
-            if is_winner(board, "O", player2_name):
-                break
-            if is_tie(board):
-                break
+        multiplayer(board, option)
     # Exit option
     elif option == 3:
         os.system("clear")
